@@ -48,6 +48,7 @@ const BlogPage = () => {
     { id: 'education', name: 'Education', icon: <Book className="w-4 h-4" /> },
   ];
 
+
   const fetchContent = async () => {
     setIsLoading(true);
     try {
@@ -64,10 +65,10 @@ const BlogPage = () => {
     }
   };
 
+  // Refresh articles on demand – now simply re-fetches content.
   const refreshArticles = async () => {
     setIsRefreshing(true);
     try {
-      await fetch('http://localhost:8000/api/scrape');
       await fetchContent();
     } catch (err) {
       setError(err.message);
@@ -76,24 +77,18 @@ const BlogPage = () => {
     }
   };
 
+  // Initial load: just fetch the content (no need to call /scrape separately)
   useEffect(() => {
-    const initialLoad = async () => {
-      try {
-        await fetch('http://localhost:8000/api/scrape');
-        await fetchContent();
-      } catch (err) {
-        setError(err.message);
-        setIsLoading(false);
-      }
-    };
-    initialLoad();
+    fetchContent();
   }, []);
 
+  // Fetch new content when page changes.
   useEffect(() => {
     if (!isLoading) {
       fetchContent();
     }
   }, [currentPage]);
+
 
   useEffect(() => {
     const handleScroll = () => {
