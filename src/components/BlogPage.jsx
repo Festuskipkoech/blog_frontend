@@ -52,7 +52,7 @@ const BlogPage = () => {
   const fetchContent = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:8000/api/content?page=${currentPage}&per_page=${articlesPerPage}`);
+      const response = await fetch(`https://api.jengapps.org/api/content?page=${currentPage}&per_page=${articlesPerPage}`);
       if (!response.ok) {
         throw new Error('Failed to fetch content');
       }
@@ -65,7 +65,7 @@ const BlogPage = () => {
     }
   };
 
-  // Refresh articles on demand – now simply re-fetches content.
+
   const refreshArticles = async () => {
     setIsRefreshing(true);
     try {
